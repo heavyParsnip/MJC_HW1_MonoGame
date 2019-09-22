@@ -44,6 +44,7 @@ namespace MJC_HW1_MonoGame
             }
         }
 
+        //Special collectibles run away from the player
         public override void Update(GameTime gameTime, Player player)
         {
             //Run away!

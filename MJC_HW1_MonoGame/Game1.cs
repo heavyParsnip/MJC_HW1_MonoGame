@@ -51,6 +51,7 @@ namespace MJC_HW1_MonoGame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            //Set window size
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 1200;
             graphics.ApplyChanges();
@@ -66,7 +67,7 @@ namespace MJC_HW1_MonoGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //Retrieve window dimensions
             width = graphics.GraphicsDevice.Viewport.Width;
             height = graphics.GraphicsDevice.Viewport.Height;
             base.Initialize();
@@ -118,9 +119,11 @@ namespace MJC_HW1_MonoGame
                 Exit();
 
             //Update logic!
+            //Update keyboard states
             previousKbState = kbState;
             kbState = Keyboard.GetState();
 
+            //Update game state
             switch (CurrentState)
             {
                 case GameState.Menu:
@@ -152,6 +155,7 @@ namespace MJC_HW1_MonoGame
                         }
                     }
 
+                    //Update remaining collectibles
                     int collectiblesLeft = 1 + level + specialCollectibles.Count;
                     foreach(Collectible c in collectibles)
                     {
@@ -201,6 +205,7 @@ namespace MJC_HW1_MonoGame
             switch (CurrentState)
             {
                 case GameState.Menu:
+                    //Draw instructions
                     Vector2 titleVec = new Vector2((width / 2) - (width / 24), (height / 2) - (height / 8));
                     Vector2 InstructVecA = new Vector2((width / 2) - 400, (height / 2) + 80);
 
@@ -208,6 +213,7 @@ namespace MJC_HW1_MonoGame
                     spriteBatch.DrawString(gameFont, "Use the arrow keys to move around & collect flowers before time runs out!", InstructVecA, Color.Black);
                     break;
                 case GameState.Game:
+                    //Draw the game
                     player.Draw(spriteBatch);
                     foreach (Collectible c in collectibles)
                     {
@@ -233,6 +239,7 @@ namespace MJC_HW1_MonoGame
 
                     break;
                 case GameState.GameOver:
+                    //Draw the game over screen
                     Vector2 gameOverVec = new Vector2((width / 2) - (width / 20), (height / 2) - (height / 8));
                     Vector2 finalLevelVec = new Vector2((width / 2) - 100, (height / 2) + 80);
                     Vector2 finalScoreVec = new Vector2((width / 2) - 100, (height / 2) + 120);
@@ -256,6 +263,7 @@ namespace MJC_HW1_MonoGame
         /// </summary>
         private void NextLevel()
         {
+            //Modify and reset values accordingly
             level += 1;
             timer = (10.0);
             player.LevelScore = 0;
@@ -264,6 +272,7 @@ namespace MJC_HW1_MonoGame
             specialCollectibles.Clear();
             Point collectibleSize = new Point(300, 300);
 
+            //Generate new collectibles
             int numOfCollectibles = (1 + level);
 
             for(int i = 0; i < numOfCollectibles; i++)
